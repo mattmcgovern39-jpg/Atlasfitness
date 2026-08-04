@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { StatCard } from '@/components/StatCard';
 import { DispositionBadge } from '@/components/DispositionBadge';
 import { formatDuration, formatPercent, formatDateTime } from '@/lib/format';
+import { formatPhone } from '@/lib/phone';
 import type { AnalyticsSummary } from '@/lib/analytics';
 import type { CallRecord, Disposition } from '@/lib/types';
 
@@ -96,8 +97,10 @@ export default function DashboardPage() {
                 <tbody>
                   {recentCalls.map((call) => (
                     <tr key={call.id} className="border-t border-slate-100">
-                      <td className="py-2 pr-3 font-medium text-slate-800">{call.lead_name.trim() || call.phone}</td>
-                      <td className="py-2 pr-3 text-slate-500">{call.phone}</td>
+                      <td className="py-2 pr-3 font-medium text-slate-800">
+                        {call.lead_name.trim() || formatPhone(call.phone)}
+                      </td>
+                      <td className="py-2 pr-3 text-slate-500">{formatPhone(call.phone)}</td>
                       <td className="py-2 pr-3">
                         <DispositionBadge disposition={call.disposition as Disposition} />
                       </td>
