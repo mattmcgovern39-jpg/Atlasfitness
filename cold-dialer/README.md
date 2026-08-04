@@ -37,8 +37,12 @@ npm install
 npm run dev
 ```
 
-Open <http://localhost:3000>. Optionally generate a sample CSV to try the
-import flow before using your own list:
+Open <http://localhost:3000> (`127.0.0.1:3000` works too — both are
+allow-listed in `next.config.js` via `allowedDevOrigins`, which the dev
+server requires or it will 403 its own assets).
+
+Optionally generate a sample CSV to try the import flow before using your
+own list:
 
 ```bash
 npm run db:seed:sample   # writes sample_leads.csv
@@ -95,7 +99,7 @@ cold-dialer/
 │   │   ├── callingHours.ts # Local-time calling-window check
 │   │   ├── csv.ts          # CSV parsing, column-mapping, export sanitization
 │   │   └── validation.ts   # zod schemas for every API input
-│   └── middleware.ts       # Origin check on all /api/* writes (see Security)
+│   └── proxy.ts            # Origin check on all /api/* writes (see Security)
 ├── scripts/generate-sample-csv.ts
 └── data/                    # SQLite file lives here (git-ignored)
 ```
@@ -138,8 +142,9 @@ This app is designed to run only on your own machine:
   lookup table, not a network call.
 - **No auth, by design, with a mitigation.** A single-user localhost tool
   doesn't need a login. But without a login there's also no session for a
-  malicious webpage to ride, so `src/middleware.ts` independently rejects
-  any state-changing request (`POST`/`PATCH`/etc.) whose `Origin` header
+  malicious webpage to ride, so `src/proxy.ts` (Next.js's request
+  interceptor, formerly called `middleware`) independently rejects any
+  state-changing request (`POST`/`PATCH`/etc.) whose `Origin` header
   doesn't match the server's own host — this stops another browser tab
   from silently writing to your local data.
 - **Parameterized SQL everywhere.** No string-built queries from user

@@ -13,7 +13,7 @@ const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
  * state-changing request (same-origin or not), so rejecting mismatches
  * closes that off while leaving normal use of the app untouched.
  */
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   if (SAFE_METHODS.has(req.method)) return NextResponse.next();
 
   const origin = req.headers.get('origin');

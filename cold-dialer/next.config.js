@@ -5,6 +5,12 @@ const nextConfig = {
   // because it is not intended to ever be exposed to a network or the
   // internet. See README "Security" section before changing the host binding.
   serverExternalPackages: ['better-sqlite3'],
+  // `next dev` only trusts the hostname it was started with (localhost) and
+  // 403s dev assets for any other origin. Without this, opening the app at
+  // http://127.0.0.1:3000 — the same machine, just spelled differently —
+  // fails to load its JS chunks and the UI silently does nothing. Both
+  // spellings are the same local loopback interface, so both are trusted.
+  allowedDevOrigins: ['localhost', '127.0.0.1'],
   async headers() {
     return [
       {
