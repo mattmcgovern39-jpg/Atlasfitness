@@ -1,0 +1,35 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# local database (contains your lead & call data — never commit it)
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# env files (never commit secrets)
+.env
+.env.local
+.env*.local
+
+# logs
+npm-debug.log*
+*.log
+
+# os
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+
+# build/test artifacts
+coverage/
+tsconfig.tsbuildinfo
